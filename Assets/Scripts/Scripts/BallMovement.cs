@@ -4,26 +4,57 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // Private fields
+    private Rigidbody2D rb;
+    private Vector2 direction;
+    private float speed = 5f;
+
+    // Public getters and setters
+    public float GetSpeed()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new UnityEngine.Vector2(2f,3f);
-        rb.freezeRotation = true;
+        return speed;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetSpeed(float newSpeed)
     {
-        
+        speed = newSpeed;
+        rb.velocity = direction * speed; // immediately update velocity
+    }
+
+    public Vector2 GetDirection()
+    {
+        return direction;
+    }
+
+    public void SetDirection(Vector2 newDirection)
+    {
+        direction = newDirection.normalized;
+        rb.velocity = direction * speed; // immediately update velocity
+    }
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
+        rb.gravityScale = 0; // ensure gravity doesn't affect the ball
+
+        // Initialize ball movement
+        direction = new Vector2(2f, 3f).normalized; // initial direction
+        speed = 5f;
+
+        rb.velocity = direction * speed; // start moving
+    }
+
+    void FixedUpdate()
+    {
+        rb.velocity = direction * speed;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         Vector2 normal = collision.contacts[0].normal;
-    
-        // Reflect velocity based on surface angle
-        rb.velocity = Vector2.Reflect(rb.velocity, normal);
+        direction = Vector2.Reflect(direction, normal).normalized;
+
+        rb.velocity = direction * speed;
     }
 }
