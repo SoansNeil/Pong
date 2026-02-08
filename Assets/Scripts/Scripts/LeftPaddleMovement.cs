@@ -7,5 +7,5 @@ public class LeftPaddleMovement : PaddleMovement
     protected override float GetMovementInput()
   {
     return Input.GetAxis("LeftPaddle");
-  }
+  } 
 }
