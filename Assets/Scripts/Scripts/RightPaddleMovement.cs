@@ -6,6 +6,10 @@ public class RightPaddleMovement : PaddleMovement
 {
     protected override float GetMovementInput()
   {
-    return Input.GetAxis("RightPaddle");
+    if(!IsOwner)    {
+        return 0;
+    }
+    else return Input.GetAxis("RightPaddle");
   }
+
 }
