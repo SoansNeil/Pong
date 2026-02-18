@@ -26,7 +26,6 @@ public abstract class PaddleMovement : NetworkBehaviour, ICollidable
     }
     else
     {
-        // Non-owners follow the synced value
         transform.position = new Vector3(transform.position.x, yPos.Value, 0);
     }
     }
