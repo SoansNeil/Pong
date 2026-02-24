@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public abstract class PaddleMovement : NetworkBehaviour, ICollidable
 {
     private float speed = 5.0f;
+    public Vector3 startingPosition;
     private NetworkVariable<float> yPos = new NetworkVariable<float>(0f,NetworkVariableReadPermission.Everyone,
     NetworkVariableWritePermission.Owner);
     private SpriteRenderer sr;
